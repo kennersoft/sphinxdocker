@@ -1,6 +1,6 @@
 sphinxdocker
 ============
-Sphinx-beta in an Ubuntu Docker container! This container will require some configuration (which is really no big deal), but if you just want to pass in database connection parameters when starting the container, go try [this one](https://github.com/stefobark/QuickSphinx). It's probably the easiest way to get started playing around with Sphinx.
+Sphinx-beta in an Debian 10 Docker container! This container will require some configuration (which is really no big deal), but if you just want to pass in database connection parameters when starting the container, go try [this one](https://github.com/stefobark/QuickSphinx). It's probably the easiest way to get started playing around with Sphinx.
 
 #####Build it:#####
 
@@ -21,7 +21,7 @@ docker pull kennersoft/sphinxsearch:2.2.11
 
 Run Sphinx in a 'detached' container (daemonized) like so:
 ```
-sudo docker.io run -p 9311:9306 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ -d sphinx ./indexandsearch.sh
+docker run -p 9311:9306 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ -d sphinx ./indexandsearch.sh
 ```
 
 The ```-p 9311:9306``` is opening port 9306 to port 9311 on the host machine. Open whatever port you've told searchd to listen to. Then, with -v we're sharing the ```/path/to/local/sphinx directory``` (which is the directory you're using for these docker files) with the container's ```/etc/sphinxsearch```. This is handy because we can now edit the Sphinx configuration file from the host machine. So, now, after running indexandsearch.sh, Sphinx should have a configuration file to work with.
@@ -41,7 +41,7 @@ I'm using another container that's running MySQL. To connect to that MySQL conta
 ####Check it Out####
 Now, let's make sure it's running:
 
-```sudo docker.io ps```
+```sudo docker ps```
 
 Perfect.
 
@@ -73,7 +73,7 @@ This created some 'shards' and 'mirrors'.. Containers that have ports starting w
 
 From here, I started up 'lordsphinx':
 ```
-sudo docker.io run -p 9999:9999 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name lordsphinx -d stefobark/sphinx ./lordsearchd.sh
+docker run -p 9999:9999 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name lordsphinx -d stefobark/sphinx ./lordsearchd.sh
 ```
 
 It held the 'distributed' index type, which maps to the other instances of Sphinx. 

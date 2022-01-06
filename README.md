@@ -63,10 +63,10 @@ Sometimes it's good to shard your index, or you might want to do agent mirroring
 
 I started a bunch of Sphinx containers off of one image... many containers with unique names. To edit where searchd listens, and what will be indexed, for each container, I just edited ```sphinxy.conf``` before starting it:
 ```
-sudo docker.io run -p 9306:9306 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx1 -d stefobark/sphinx ./indexandsearch.sh
-sudo docker.io run -p 9307:9307 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx2 -d stefobark/sphinx ./indexandsearch.sh
-sudo docker.io run -p 9406:9406 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx3 -d stefobark/sphinx ./indexandsearch.sh
-sudo docker.io run -p 9407:9407 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx4 -d stefobark/sphinx ./indexandsearch.sh
+docker run -p 9306:9306 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx1 -d stefobark/sphinx ./indexandsearch.sh
+docker run -p 9307:9307 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx2 -d stefobark/sphinx ./indexandsearch.sh
+docker run -p 9406:9406 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx3 -d stefobark/sphinx ./indexandsearch.sh
+docker run -p 9407:9407 -v /path/to/local/sphinx/conf:/etc/sphinxsearch/ --name sphinx4 -d stefobark/sphinx ./indexandsearch.sh
 ```
 
 This created some 'shards' and 'mirrors'.. Containers that have ports starting with ``93`` are all mirrors of each other, they contain the first 100 docs from our datasource. Those listening on ports starting with ```94``` are also mirrors of each other, they hold the next 100 docs.

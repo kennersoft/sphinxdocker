@@ -41,7 +41,7 @@ I'm using another container that's running MySQL. To connect to that MySQL conta
 ####Check it Out####
 Now, let's make sure it's running:
 
-```sudo docker ps```
+```docker ps```
 
 Perfect.
 

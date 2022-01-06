@@ -97,7 +97,3 @@ After this file is generated, start the last container, lordsphinx, with ```lord
     ports:
       - 9395:9395
     command: bash -c "/usr/bin/searchd -c /etc/sphinxsearch/sphinxy.conf  & /usr/bin/indexer -c /etc/sphinxsearch/sphinxy.conf --rotate --all && tail -F /var/lib/sphinx/log/*.log"
-    links:
-      - database_server
-    depends_on:
-      - database_server

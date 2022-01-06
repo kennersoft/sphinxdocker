@@ -87,7 +87,7 @@ The motivation behind makelord.sh is to detect existing Sphinx containers, grab 
 After this file is generated, start the last container, lordsphinx, with ```lordsearchd.sh``` (which will run Sphinx with ```bsphinx.conf```). Just an experiment. More messing around to do here.
 
 
-###Exalmpe for using in docker-compose 
+### Exalmpe for using in docker-compose 
 ```
   sphinx_server:
     image: kennersoft/sphinxsearch:2.2.11

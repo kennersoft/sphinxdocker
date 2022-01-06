@@ -88,6 +88,7 @@ After this file is generated, start the last container, lordsphinx, with ```lord
 
 
 ###Exalmpe for using in docker-compose 
+```
   sphinx_server:
     image: kennersoft/sphinxsearch:2.2.11
     container_name: spooxid6_sphinx
@@ -97,3 +98,4 @@ After this file is generated, start the last container, lordsphinx, with ```lord
     ports:
       - 9395:9395
     command: bash -c "/usr/bin/searchd -c /etc/sphinxsearch/sphinxy.conf && /usr/bin/indexer -c /etc/sphinxsearch/sphinxy.conf --rotate --all && tail -F /var/lib/sphinx/log/*.log"
+```

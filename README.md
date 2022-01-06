@@ -5,17 +5,17 @@ Sphinx-beta in an Ubuntu Docker container! This container will require some conf
 #####Build it:#####
 
 ```
-sudo docker.io build -t sphinx . 
+docker build -t sphinx . 
 ```
 
 #####Pull it:######
 
 ```
-sudo docker.io pull stefobark/sphinxdocker
+docker pull kennersoft/sphinxsearch:2.2.11
 ```
 
 ####Some Introduction####
-```Dockerfile```  starts by adding the Phusion Ubuntu base image, adds the Sphinx PPA, installs Sphinx, creates some directories, ADDs our .sh files, and exposes port 9306. It'll take a bit to run through the steps but after some time, it should confirm a successful build. 
+```Dockerfile```  starts by adding the Debian 10 base image and installs Sphinx, creates some directories, ADDs our .sh files, and exposes port 9306. It'll take a bit to run through the steps but after some time, it should confirm a successful build. 
 
 ####Run the Container####
 
@@ -87,3 +87,17 @@ The motivation behind makelord.sh is to detect existing Sphinx containers, grab 
 After this file is generated, start the last container, lordsphinx, with ```lordsearchd.sh``` (which will run Sphinx with ```bsphinx.conf```). Just an experiment. More messing around to do here.
 
 
+###Exalmpe for using in docker-compose 
+  sphinx_server:
+    image: kennersoft/sphinxsearch:2.2.11
+    container_name: spooxid6_sphinx
+    volumes:
+      - ./data/sphinxsearch/sphinxy.conf:/etc/sphinxsearch/sphinxy.conf
+      - ./data/sphinxsearch:/var/lib/sphinx
+    ports:
+      - 9395:9395
+    command: bash -c "/usr/bin/searchd -c /etc/sphinxsearch/sphinxy.conf  & /usr/bin/indexer -c /etc/sphinxsearch/sphinxy.conf --rotate --all && tail -F /var/lib/sphinx/log/*.log"
+    links:
+      - database_server
+    depends_on:
+      - database_server

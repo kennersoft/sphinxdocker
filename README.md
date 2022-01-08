@@ -1,6 +1,6 @@
 sphinxdocker
 ============
-Sphinx-beta in an Debian 10 Docker container! This container will require some configuration (which is really no big deal), but if you just want to pass in database connection parameters when starting the container, go try [this one](https://github.com/stefobark/QuickSphinx). It's probably the easiest way to get started playing around with Sphinx.
+Sphinx-beta in an Debian 10 Docker container! This container will require some configuration (which is really no big deal), but if you just want to pass in database connection parameters when starting the container, go try [this one](https://hub.docker.com/repository/docker/kennersoft/dev). It's probably the easiest way to get started playing around with Sphinx.
 
 ##### Build it:
 
@@ -88,7 +88,25 @@ After this file is generated, start the last container, lordsphinx, with ```lord
 
 
 ### Exalmpe for using in docker-compose 
+
+If you use the the image MySQL image
+
 ```
+  database_server:
+    image: mysql:5.7
+    container_name: $MYSQL_CONTAINER_NAME
+    volumes:
+      - ./data/mysql/:/var/lib/mysql:delegated
+    ports:
+      - 3306:3306
+    command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION --skip-ssl --max_allowed_packet=500M  --innodb_flush_log_at_trx_commit=0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    user: "$UID_U:$GID_U"
+
   sphinx_server:
     image: kennersoft/sphinxsearch:2.2.11
     container_name: spooxid6_sphinx
@@ -98,4 +116,8 @@ After this file is generated, start the last container, lordsphinx, with ```lord
     ports:
       - 9395:9395
     command: bash -c "/usr/bin/searchd -c /etc/sphinxsearch/sphinxy.conf && /usr/bin/indexer -c /etc/sphinxsearch/sphinxy.conf --rotate --all && tail -F /var/lib/sphinx/log/*.log"
+    links:
+      - database_server
+    depends_on:
+      - database_server
 ```

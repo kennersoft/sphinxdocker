@@ -89,7 +89,7 @@ After this file is generated, start the last container, lordsphinx, with ```lord
 
 ### Exalmpe for using in docker-compose 
 
-If you use the the image MySQL image
+If you use the official MySQL image docker-compose file must include.
 
 ```
   database_server:
@@ -121,3 +121,5 @@ If you use the the image MySQL image
     depends_on:
       - database_server
 ```
+
+If you want any support for [docker configuration](https://kennersoft.de/services/devops), don't worry, write us.
